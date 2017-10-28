@@ -6,15 +6,15 @@ var cardSuit = ["diamonds", "spades", "clubs", "hearts"];
 var Card = function(){
 	this.suit = document.createElement('img');
 	this.number = document.createElement('div');
+	this.cardContDiv = document.createElement('div');
 	this.init = function(){
-		var cardContDiv = document.createElement('div'),
-	flipDiv = document.createElement('div'),
+		var flipDiv = document.createElement('div'),
 	frontDiv = document.createElement('div'),
 	backDiv = document.createElement('div'),
 	catDiv = document.createElement('div');
 	this.suit.src = "Images/hearts.svg";
 
-cardContDiv.className = 'card_container';
+this.cardContDiv.className = 'card_container';
 flipDiv.className = 'flip';
 frontDiv.className = 'card_front';
 backDiv.className = 'card_back';
@@ -25,8 +25,8 @@ catDiv.appendChild(this.suit);
 frontDiv.appendChild(catDiv);
 flipDiv.appendChild(frontDiv);
 flipDiv.appendChild(backDiv);
-cardContDiv.appendChild(flipDiv);
-		cardContDiv.onclick = function(e){
+this.cardContDiv.appendChild(flipDiv);
+		this.cardContDiv.onclick = function(e){
 			console.log(e.currentTarget);
 			e.currentTarget.classList.toggle("flip_card");
 //			setTimeout(function(e){
@@ -34,11 +34,15 @@ cardContDiv.appendChild(flipDiv);
 //			}, 650)
 		}
 		
-		
+		this.cardContDiv.draggable = true;
+		this.cardContDiv.id = this.id;
+		this.cardContDiv.ondragstart = function(e) {
+			e.dataTransfer.setData("text", e.target.id);
+		}
 
 var cardDeck = document.getElementById("cardDeck")
 
-cardDeck.appendChild(cardContDiv);
+cardDeck.appendChild(this.cardContDiv);
 	}
 }
 
@@ -49,8 +53,19 @@ for (var i = cardNumbers.length - 1; i >= 0; i--) {
 		CardDeck.init();
 		CardDeck.number.innerHTML = cardNumbers[i];
 		CardDeck.suit.src = "Images/" + cardSuit[j] + ".svg";
+		CardDeck.cardContDiv.id = cardSuit[j] + cardNumbers[i];
 	}
 }
+
+var dropArea = document.getElementById("discardPile");
+dropArea.addEventListener("drop", function(e){
+	e.preventDefault();
+	var data = e.dataTransfer.getData("text");
+    e.target.appendChild(document.getElementById(data));
+})
+dropArea.addEventListener("dragover", function(e){
+	e.preventDefault();
+});
 
 var shuffleButton = document.getElementById('shuffle');
 shuffleButton.addEventListener("click", function(e){shuffle()})
