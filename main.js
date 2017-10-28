@@ -33,6 +33,8 @@ cardContDiv.appendChild(flipDiv);
 //				e.currentTarget.classList.remove("flip_card");
 //			}, 650)
 		}
+		
+		
 
 var cardDeck = document.getElementById("cardDeck")
 
@@ -47,6 +49,30 @@ for (var i = cardNumbers.length - 1; i >= 0; i--) {
 		CardDeck.init();
 		CardDeck.number.innerHTML = cardNumbers[i];
 		CardDeck.suit.src = "Images/" + cardSuit[j] + ".svg";
+	}
+}
+
+var shuffleButton = document.getElementById('shuffle');
+shuffleButton.addEventListener("click", function(e){shuffle()})
+
+function shuffle(array) {
+	var cardDeck = document.getElementById("cardDeck");
+	var array = cardDeck.childNodes;
+	  var m = array.length, t, i;
+
+	  // While there remain elements to shuffle…
+	  while (m) {
+
+		// Pick a remaining element…
+		i = Math.floor(Math.random() * m--);
+
+		// And swap it with the current element.
+		t = array[m];
+		array[m] = array[i];
+		array[i] = t;
+  	}
+	for (var i = array.length - 1; i >= 0; i--) {
+		cardDeck.appendChild(array[i]);
 	}
 }
 
