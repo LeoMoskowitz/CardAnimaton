@@ -46,6 +46,13 @@ body {
 #cardDeck {
 	width: 1514px;
 	margin: 0 auto;
+	width: 1050px;
+}
+
+#discardPile{
+	width: 225px;
+	height: 305px;
+	border: thin blue dotted;
 }
 
 @media (max-width: 650px) {
