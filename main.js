@@ -61,7 +61,9 @@ var dropArea = document.getElementById("discardPile");
 dropArea.addEventListener("drop", function(e){
 	e.preventDefault();
 	var data = e.dataTransfer.getData("text");
-    e.target.appendChild(document.getElementById(data));
+	var cardDragging = document.getElementById(data);
+	cardDragging.classList.add("discard");
+    e.target.appendChild(cardDragging);
 })
 dropArea.addEventListener("dragover", function(e){
 	e.preventDefault();
