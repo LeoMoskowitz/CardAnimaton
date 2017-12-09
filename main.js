@@ -9,54 +9,40 @@ var Card = function(){
 	this.cardContDiv = document.createElement('div');
 	this.init = function(){
 		var flipDiv = document.createElement('div'),
-	frontDiv = document.createElement('div'),
-	backDiv = document.createElement('div'),
-	catDiv = document.createElement('div');
-	this.suit.src = "Images/hearts.svg";
+        frontDiv = document.createElement('div'),
+        backDiv = document.createElement('div'),
+        catDiv = document.createElement('div');
+	   this.suit.src = "Images/hearts.svg";
 
-this.cardContDiv.className = 'card_container';
-flipDiv.className = 'flip';
-frontDiv.className = 'card_front';
-backDiv.className = 'card_back';
-catDiv.className = 'card_category';
+        this.cardContDiv.className = 'card_container';
+        flipDiv.className = 'flip';
+        frontDiv.className = 'card_front';
+        backDiv.className = 'card_back';
+        catDiv.className = 'card_category';
 
-catDiv.appendChild(this.number);
-catDiv.appendChild(this.suit);
-frontDiv.appendChild(catDiv);
-flipDiv.appendChild(frontDiv);
-flipDiv.appendChild(backDiv);
-this.cardContDiv.appendChild(flipDiv);
-		this.cardContDiv.onclick = function(e){
-			console.log(e.currentTarget);
-			e.currentTarget.classList.toggle("flip_card");
-//			setTimeout(function(e){
-//				e.currentTarget.classList.remove("flip_card");
-//			}, 650)
-		}
-		
-		this.cardContDiv.draggable = true;
-		this.cardContDiv.id = this.id;
-		this.cardContDiv.ondragstart = function(e) {
-			e.dataTransfer.setData("text", e.target.id);
-		}
+        catDiv.appendChild(this.number);
+        catDiv.appendChild(this.suit);
+        frontDiv.appendChild(catDiv);
+        flipDiv.appendChild(frontDiv);
+        flipDiv.appendChild(backDiv);
+    this.cardContDiv.appendChild(flipDiv);
+            this.cardContDiv.onclick = function(e){
+                console.log(e.currentTarget);
+                e.currentTarget.classList.toggle("flip_card");
+    //			setTimeout(function(e){
+    //				e.currentTarget.classList.remove("flip_card");
+    //			}, 650)
+            }
 
-var cardDeck = document.getElementById("cardDeck")
-
-cardDeck.appendChild(this.cardContDiv);
-	}
-}
-
-for (var i = cardNumbers.length - 1; i >= 0; i--) {
-
-	for(var j = cardSuit.length - 1; j >= 0; j--){
-		var CardDeck = new Card();
-		CardDeck.init();
-		CardDeck.number.innerHTML = cardNumbers[i];
-		CardDeck.suit.src = "Images/" + cardSuit[j] + ".svg";
-		CardDeck.cardContDiv.id = cardSuit[j] + cardNumbers[i];
-	}
-}
-
+            this.cardContDiv.draggable = true;
+            this.cardContDiv.id = this.id;
+            this.cardContDiv.ondragstart = function(e) {
+                e.dataTransfer.setData("text", e.target.id);
+            }
+            return this.cardContDiv
+        }
+    }
+    
 var dropArea = document.getElementById("discardPile");
 dropArea.addEventListener("drop", function(e){
 	e.preventDefault();
@@ -107,3 +93,23 @@ function shuffle(array) {
 //var CardDeck4 = new Card();
 //CardDeck4.init();
 //CardDeck4.suit.src="Images/clubs.svg"
+
+var Deck = function(){
+    this.cardDeck = document.getElementById("cardDeck")
+    this.init = function(){
+        for (var i = cardNumbers.length - 1; i >= 0; i--) {
+
+            for(var j = cardSuit.length - 1; j >= 0; j--){
+                var myCard = new Card();
+                var myCardCont = myCard.init();
+                myCard.number.innerHTML = cardNumbers[i];
+                myCard.suit.src = "Images/" + cardSuit[j] + ".svg";
+                myCard.cardContDiv.id = cardSuit[j] + cardNumbers[i];
+                this.cardDeck.appendChild(myCardCont);
+            }
+
+        }
+    }
+}
+var Game = new Deck();
+Game.init();
